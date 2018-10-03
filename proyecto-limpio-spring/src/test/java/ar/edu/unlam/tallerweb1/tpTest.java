@@ -78,8 +78,8 @@ public class tpTest extends SpringTest {
 		session.save(continenteA);
 
 		List<Pais> paisEuropeo = getSession().createCriteria(Pais.class)
-								.createAlias("continente", "cont")
-								.add(Restrictions.eq("cont.nombre", "Europa"))
+								.createAlias("continente", "contNombre")
+								.add(Restrictions.eq("contNombre.nombre", "Europa"))
 								.list();
 
 		assertThat(paisEuropeo).isNotNull();
@@ -100,13 +100,13 @@ public class tpTest extends SpringTest {
 	public void TestQueBuscaCiudadesDebajoDelHemisferioSur() {
 
 		Ubicacion ubicacion1 = new Ubicacion();
-		ubicacion1.setLatitud((float) -34.60368440);
+		ubicacion1.setLatitud(-34.60368440);
 
 		Ubicacion ubicacion2 = new Ubicacion();
-		ubicacion2.setLatitud((float) 41.385063899);
+		ubicacion2.setLatitud(41.385063899);
 
 		Ubicacion ubicacion3 = new Ubicacion();
-		ubicacion3.setLatitud((float) -34.9011127);
+		ubicacion3.setLatitud(-34.9011127);
 
 		Ciudad ciudad1 = new Ciudad();
 		ciudad1.setNombre("Buenos Aires");
@@ -128,13 +128,13 @@ public class tpTest extends SpringTest {
 		session.save(ciudad2);
 		session.save(ciudad3);
 
-		List<Pais> paisesLatitudNegativa = getSession().createCriteria(Ciudad.class)
-										   .createAlias("Ubicacion", "latitutBuscada")
-										   .add(Restrictions.gt("latitutBuscada.latitud", (float)0.0))
+		List<Ciudad> paisesLatitudNegativa = getSession().createCriteria(Ciudad.class)
+										   .createAlias("ubicacionGeografica", "latitutBuscada")
+										   .add(Restrictions.le("latitutBuscada.latitud", 0.0))
 										   .list();
 
 		assertThat(paisesLatitudNegativa).isNotNull();
-		assertThat(paisesLatitudNegativa.size()).isEqualTo(1);
+		assertThat(paisesLatitudNegativa.size()).isEqualTo(2);
 	}
 
 }

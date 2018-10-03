@@ -12,24 +12,30 @@ public class Ubicacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	private Long id;
-	private float longitud;
-	private float latitud;
+	private Double longitud;
+	private Double latitud;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public float getLongitud() {
+
+	public Double getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(float longitud) {
+
+	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
-	public float getLatitud() {
+
+	public Double getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(float latitud) {
+
+	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
 	}
 
