@@ -39,8 +39,9 @@ public class tpTest extends SpringTest {
 		session.save(pais2);
 		session.save(pais3);
 
-		List<Pais> paisHablaInglesa = getSession().createCriteria(Pais.class).add(Restrictions.eq("idioma", "Ingles"))
-				.list();
+		List<Pais> paisHablaInglesa = getSession().createCriteria(Pais.class)
+									  .add(Restrictions.eq("idioma", "Ingles"))
+									  .list();
 
 		assertThat(paisHablaInglesa).isNotNull();
 		assertThat(paisHablaInglesa.size()).isEqualTo(1);
@@ -76,8 +77,10 @@ public class tpTest extends SpringTest {
 		session.save(continenteE);
 		session.save(continenteA);
 
-		List<Pais> paisEuropeo = getSession().createCriteria(Pais.class).createAlias("continente", "cont")
-				.add(Restrictions.eq("cont.nombre", "Europa")).list();
+		List<Pais> paisEuropeo = getSession().createCriteria(Pais.class)
+								.createAlias("continente", "cont")
+								.add(Restrictions.eq("cont.nombre", "Europa"))
+								.list();
 
 		assertThat(paisEuropeo).isNotNull();
 		assertThat(paisEuropeo.size()).isEqualTo(2);
@@ -125,11 +128,13 @@ public class tpTest extends SpringTest {
 		session.save(ciudad2);
 		session.save(ciudad3);
 
-		List<Pais> paisesLatitudNegativa = getSession().createCriteria(Pais.class).createAlias("continente", "cont")
-				.add(Restrictions.eq("cont.nombre", "Europa")).list();
+		List<Pais> paisesLatitudNegativa = getSession().createCriteria(Ciudad.class)
+										   .createAlias("Ubicacion", "latitutBuscada")
+										   .add(Restrictions.gt("latitutBuscada.latitud", (float)0.0))
+										   .list();
 
 		assertThat(paisesLatitudNegativa).isNotNull();
-		assertThat(paisesLatitudNegativa.size()).isEqualTo(2);
+		assertThat(paisesLatitudNegativa.size()).isEqualTo(1);
 	}
 
 }
