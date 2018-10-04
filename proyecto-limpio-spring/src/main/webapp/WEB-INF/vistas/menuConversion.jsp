@@ -11,7 +11,7 @@
 		<input type = "text" name="cadena" id="cadena"></input>
 		<br>
 		<br>
-		<label>Seleccione un método:</label><br>
+		<label>Seleccione un mÃ©todo:</label><br>
 		
 		<input type="radio" id="operacionPasarAMayuscula" name="nombreOperacion" value="pasarAMayuscula" checked> Pasar a Mayuscula<br>
   		<input type="radio" id="operacionPasarAMinuscula" name="nombreOperacion" value="pasarAMinuscula"> Pasar a Minuscula<br>
@@ -23,11 +23,26 @@
 	
 	<script>
 		function postToController(){
-			
+			if (isValid())
+			{
+				var cadena = document.getElementById("cadena").value;
+				
+				var operacion = document.querySelector('input[name="nombreOperacion"]:checked').value;
+				
+				location.href='./resultadoConversion/' + operacion + '/' + cadena;
+			}
+		}
+		
+		function isValid(){
 			var cadena = document.getElementById("cadena").value;
-			var operacion = document.querySelector('input[name="nombreOperacion"]:checked').value;
 			
-			location.href='./resultadoConversion/' + operacion + '/' + cadena;
+			if (cadena.length == 0)
+			{
+				alert("Debe ingresar la cadena");
+				return false;
+			}
+			
+			return true;
 		}
 	</script>
 </body>
