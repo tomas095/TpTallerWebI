@@ -20,40 +20,38 @@ public class TpCiudadesTest extends SpringTest {
 	
 	@Test @Transactional @Rollback
 	public void TestQueBuscaPaisesDeHablaInglesa(){
-		
+		//preparacion 
 		Pais pais1 = new Pais();
 		pais1.setNombre("Argentina");
-		pais1.setIdioma("Español");
+		pais1.setIdioma("EspaÃ±ol");
 
 		Pais pais2 = new Pais();
 		pais2.setNombre("Brasil");
-		pais2.setIdioma("Portugués");
+		pais2.setIdioma("PortuguÃ©s");
 
 		Pais pais3 = new Pais();
 		pais2.setNombre("Estados Unidos");
 		pais2.setIdioma("Ingles");
 		
-		//Ejecucion 
+		//ejecucion 
 		Session session = getSession();
 		session.save(pais1);
 		session.save(pais2);
 		session.save(pais3);
 				
-		//contrastacion
 		List<Pais> paisHablaInglesa = getSession().createCriteria(Pais.class)
 				.add(Restrictions.eq("idioma", "Ingles"))
 				.list();
-
+		
+		//contrastacion
 		for (Pais pais : paisHablaInglesa){
 			assertThat(pais.getIdioma()).isEqualTo("Ingles");
 		}
-		
-		assertThat(paisHablaInglesa.size()).isEqualTo(1);
 	}
 	
 	@Test @Transactional @Rollback
 	public void TestQueBuscaPaisesDelContinenteEuropeo() {
-
+		//preparacion 
 		Continente continenteE = new Continente();
 		continenteE.setNombre("Europa");
 
@@ -61,7 +59,7 @@ public class TpCiudadesTest extends SpringTest {
 		continenteA.setNombre("America");
 
 		Pais pais1 = new Pais();
-		pais1.setNombre("España");
+		pais1.setNombre("EspaÃ±a");
 		pais1.setContinente(continenteE);
 
 		Pais pais2 = new Pais();
@@ -71,7 +69,8 @@ public class TpCiudadesTest extends SpringTest {
 		Pais pais3 = new Pais();
 		pais3.setNombre("Alemania");
 		pais3.setContinente(continenteE);
-
+		
+		//ejecucion
 		Session session = getSession();
 		session.save(pais1);
 		session.save(pais2);
@@ -81,7 +80,8 @@ public class TpCiudadesTest extends SpringTest {
 				.createAlias("continente", "cont")
 				.add(Restrictions.eq("cont.nombre", "Europa"))
 				.list();
-
+		
+		//contrastacion
 		for (Pais pais : paisEuropeo){
 			assertThat(pais.getContinente().getNombre()).isEqualTo("Europa");
 		}		
@@ -89,7 +89,7 @@ public class TpCiudadesTest extends SpringTest {
 	
 	@Test @Transactional @Rollback
 	public void TestQueBuscaPaisesConCapitalAlNorteDelTropicoDeCancer2() {
-		//preparación
+		//preparacion 
 		Ubicacion tropicoDeCancer = new Ubicacion();
 		tropicoDeCancer.setLatitud(23.43722);
 		
@@ -119,13 +119,14 @@ public class TpCiudadesTest extends SpringTest {
 		pais1.setCapital(ciudad1);
 
 		Pais pais2 = new Pais();
-		pais2.setNombre("España");
+		pais2.setNombre("EspaÃ±a");
 		pais2.setCapital(ciudad2);
 
 		Pais pais3 = new Pais();
 		pais3.setNombre("Uruguay");
 		pais3.setCapital(ciudad3);
 		
+		//ejecucion
 		Session session = getSession();
 		session.save(pais1);
 		session.save(pais2);
@@ -145,7 +146,7 @@ public class TpCiudadesTest extends SpringTest {
 	
 	@Test @Transactional @Rollback
 	public void TestQueBuscaTodasLasCiudadesDelHemisferioSur() {
-		//preparación
+		//preparacion 
 		Ubicacion ubicacionLineaDelEcuador = new Ubicacion();
 		ubicacionLineaDelEcuador.setLatitud(0.0);
 		
@@ -162,7 +163,8 @@ public class TpCiudadesTest extends SpringTest {
 		Ciudad ciudad2 = new Ciudad();
 		ciudad2.setNombre("Barcelona");
 		ciudad2.setUbicacionGeografica(ubicacion2);
-
+		
+		//ejecucion
 		Session session = getSession();
 		session.save(ciudad1);
 		session.save(ciudad2);
