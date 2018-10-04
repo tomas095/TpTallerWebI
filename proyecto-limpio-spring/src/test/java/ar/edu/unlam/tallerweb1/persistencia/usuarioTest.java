@@ -4,71 +4,80 @@ import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import static org.assertj.core.api.Assertions.*;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import static org.assertj.core.api.Assertions.*;
 
-public class usuarioTest extends SpringTest{
-	
+
+public class UsuarioTest extends SpringTest{
+
+	// Ctrl + Shift + O - importar clases
 	@Test @Transactional @Rollback
-	public void guardarUsuarioTest(){
-		//Preparación
-		Usuario pepe = new Usuario();
-		pepe.setEmail("email@gmail.com");
-		pepe.setPassword("passw");
-		pepe.setRol("Estudiante");
+	public void TesQuePruebaGuardarUsuario() {
 		
-		//Ejecución
+		//preparacion		
+		Usuario baldoIgnacio = new Usuario();
+		
+		baldoIgnacio.setEmail("baldoignacio.u@gmail.com");
+		baldoIgnacio.setPassword("38307024");
+		baldoIgnacio.setRol("Lic. Programador");
+		
+		//Ejecucion 
 		Session session = getSession();
-		session.save(pepe);
-		
-		//Contrastación
-		Usuario usuarioBuscado = session.get(Usuario.class, pepe.getId());
+		session.save(baldoIgnacio);
+				
+		//contrastacion
+		Usuario usuarioBuscado = session.get(Usuario.class, baldoIgnacio.getId());
 		assertThat(usuarioBuscado).isNotNull();		
 	}
 	
 	@Test @Transactional @Rollback
-	public void modificarUsuarioTest(){
-		//Preparación
-		Usuario pepe = new Usuario();
-		pepe.setEmail("email@gmail.com");
-		pepe.setPassword("passw");
-		pepe.setRol("Estudiante");
+	public void TesQuePruebaModificarUsuario() {
 		
-		//Ejecución
+		//preparacion
+				
+		Usuario usuarioParaModificar = new Usuario();
+		usuarioParaModificar.setEmail("baldoignacio.u@gmail.com");
+		usuarioParaModificar.setPassword("38307024");
+		usuarioParaModificar.setRol("Lic. Programador");
+		
 		Session session = getSession();
-		session.save(pepe);
+		session.save(usuarioParaModificar);
 		
-		//Traer usuario modificado
-		Usuario usuarioModificado = session.get(Usuario.class, pepe.getId());
+		Usuario usuarioModificado = session.get(Usuario.class, usuarioParaModificar.getId());
 		
-		usuarioModificado.setPassword("password");
+		//traerme el usuario
 		
+		usuarioModificado.setPassword("39272340");
+	
+		//Ejecucion 		
 		session.update(usuarioModificado);
+				
+		//contrastacion
+		assertThat(usuarioParaModificar.getPassword()).isEqualTo(usuarioModificado.getPassword());
 		
-		//Comparar
-		Usuario usuarioBuscado = session.get(Usuario.class, pepe.getId());
-		assertThat(usuarioBuscado.getPassword()).isEqualTo(usuarioModificado.getPassword());	
 	}
 	
 	@Test @Transactional @Rollback
-	public void eliminarUsuarioTest(){
-		//Preparación
-		Usuario pepe = new Usuario();
-		pepe.setEmail("email@gmail.com");
-		pepe.setPassword("passw");
-		pepe.setRol("Estudiante");
+	public void TesQuePruebaBorrarUsuario() {
 		
-		//Ejecución
+		//preparacion
+				
+		Usuario usuarioParaBorrar = new Usuario();
+		usuarioParaBorrar.setEmail("baldoignacio.u@gmail.com");
+		usuarioParaBorrar.setPassword("38307024");
+		usuarioParaBorrar.setRol("Programador");
+		
+		
 		Session session = getSession();
-		session.save(pepe);
-		
-		//Eliminar usuario modificado	
-		session.delete(pepe);
-		
-		//Comparar
-		Usuario usuarioBuscado = session.get(Usuario.class, pepe.getId());
-		assertThat(usuarioBuscado).isNull();
+		session.save(usuarioParaBorrar);
+			
+		//Ejecucion 		
+		session.delete(usuarioParaBorrar);
+				
+		//contrastacion
+		assertThat(usuarioParaBorrar).isNull();
 	}
+	
 }

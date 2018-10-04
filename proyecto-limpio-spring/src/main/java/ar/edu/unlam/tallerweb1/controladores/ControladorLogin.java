@@ -1,15 +1,21 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Cliente;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
 
@@ -66,5 +72,56 @@ public class ControladorLogin {
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
+	}
+	
+	@RequestMapping(path = "/saludar/{nombre}", method = RequestMethod.GET)
+	public ModelAndView Saludo(@PathVariable String nombre) {
+		ModelMap modelo = new ModelMap();
+
+		Cliente cliente = new Cliente();
+		
+		cliente.setNombre(nombre);
+		
+		modelo.put("Cliente", cliente);
+
+		return new ModelAndView("saludo", modelo);
+	}
+	
+	@RequestMapping(path = "/saludar2/{cantRepeticiones}", method = RequestMethod.GET)
+	public ModelAndView Saludo2(@PathVariable Integer cantRepeticiones) {
+		ModelMap modelo = new ModelMap();
+		
+		Cliente cliente = new Cliente();
+		cliente.setNombre("Juan Perez");
+		
+		List<Cliente> listaClientes = new ArrayList<Cliente>();
+		
+		for(Integer i = 0; i < cantRepeticiones; i++)
+		{
+			listaClientes.add(cliente);
+		}
+				
+		modelo.put("Clientes", listaClientes);
+		
+		return new ModelAndView("saludo2", modelo);
+	}
+	
+	/*REQUEST PARAM*/
+	//buscar-personas?nombre=seba&edad=30
+	@RequestMapping(path = "/buscar-personas", method = RequestMethod.GET)
+	public ModelAndView buscarPersonas(@RequestParam("nombre") String nombre, @RequestParam("edad") Integer edad) {
+		return new ModelAndView("saludo");
+	}
+	
+	/*REQUEST VARIABLES*/
+	//buscar-personas/seba/mayores/30
+	@RequestMapping(path = "/buscar-personas2/{nombre}/mayores/{edad}", method = RequestMethod.GET)
+	public ModelAndView buscarPersonas2(@PathVariable String nombre, @PathVariable Integer edad) {
+		return new ModelAndView("saludo");
+	}
+	
+	@RequestMapping(path = "/buscar", method = RequestMethod.GET)
+	public ModelAndView buscar() {
+		return new ModelAndView("buscar");
 	}
 }

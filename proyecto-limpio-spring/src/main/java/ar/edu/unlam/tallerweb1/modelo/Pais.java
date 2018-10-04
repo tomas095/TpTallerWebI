@@ -1,31 +1,36 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Pais {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
-	private Long id;
+	private long id;
+	
 	private String nombre;
+	
 	private Integer habitantes;
+	
 	private String idioma;
-	private String capital;
-
-	@ManyToOne
+	
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Ciudad capital;
+	
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private Continente continente;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -53,11 +58,11 @@ public class Pais {
 		this.idioma = idioma;
 	}
 
-	public String getCapital() {
+	public Ciudad getCapital() {
 		return capital;
 	}
 
-	public void setCapital(String capital) {
+	public void setCapital(Ciudad capital) {
 		this.capital = capital;
 	}
 
@@ -67,5 +72,5 @@ public class Pais {
 
 	public void setContinente(Continente continente) {
 		this.continente = continente;
-	}
+	}	
 }

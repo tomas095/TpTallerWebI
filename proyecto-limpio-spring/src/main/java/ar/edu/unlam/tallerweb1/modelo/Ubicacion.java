@@ -7,12 +7,12 @@ import javax.persistence.Id;
 
 @Entity
 public class Ubicacion {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Long id;
+	
 	private Double longitud;
+	
 	private Double latitud;
 
 	public Long getId() {
@@ -38,5 +38,4 @@ public class Ubicacion {
 	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
 	}
-
 }
